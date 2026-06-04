@@ -1,5 +1,4 @@
 name: matrix
-
 services:
   synapse:
     image: matrixdotorg/synapse:v1.141.0
