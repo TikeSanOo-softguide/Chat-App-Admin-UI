@@ -1,0 +1,40 @@
+name: matrix
+
+services:
+  synapse:
+    image: matrixdotorg/synapse:v1.141.0
+    container_name: synapse
+    restart: unless-stopped
+    command: ["run"]
+    ports:
+      - "8008:8008"
+    volumes:
+      - synapse_data:/data
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: synapse-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: synapse
+      POSTGRES_USER: synapse
+      POSTGRES_PASSWORD: synapsepass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  synapse-admin:
+    image: awesometechnologies/synapse-admin:latest
+    container_name: synapse-admin
+    restart: unless-stopped
+    ports:
+      - "9090:80"
+    depends_on:
+      - synapse
+
+volumes:
+  synapse_data:
+  postgres_data:

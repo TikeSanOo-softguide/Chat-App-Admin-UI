@@ -1,0 +1,35 @@
+name: Build and Deploy Edge version to GH Pages
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 100
+          fetch-tags: true
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install, Test, and Build 🔧
+        run: |
+          yarn install --immutable
+          yarn test --coverage
+          yarn build --base=/synapse-admin
+          yarn coverage:badge
+          mkdir -p dist/coverage
+          cp -R coverage/. dist/coverage/
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        with:
+          branch: gh-pages
+          folder: dist
