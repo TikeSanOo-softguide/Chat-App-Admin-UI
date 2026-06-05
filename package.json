@@ -87,6 +87,7 @@
   },
   "scripts": {
     "start": "vite serve",
+    "dev": "vite",
     "build": "vite build",
     "coverage:badge": "node ./scripts/generate-coverage-badge.mjs",
     "lint": "eslint --ignore-path .gitignore --ext .ts,.tsx,.yml,.yaml .",
