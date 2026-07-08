@@ -121,7 +121,14 @@ const authProvider: AuthProvider = {
   checkError: ({ status }: { status: number }) =>
     status === 401 || status === 403 ? Promise.reject() : Promise.resolve(),
   /** Guard protected routes by checking whether a session token is cached locally. */
-  checkAuth: async () => (hasAccessToken() ? Promise.resolve() : Promise.reject()),
+  checkAuth: async () => {
+    if (window.location.hash === "#/login") {
+        return Promise.resolve();
+    }
+    return hasAccessToken()
+        ? Promise.resolve()
+        : Promise.reject();
+  },
   /** Synapse Admin currently does not model separate permission payloads. */
   getPermissions: () => Promise.resolve(),
   /** Expose the cached user ID so react-admin can render identity-aware UI. */
