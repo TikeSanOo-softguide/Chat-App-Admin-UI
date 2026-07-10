@@ -39,3 +39,16 @@ form_secret: "Lo=_Bc&Um;MDI@^#z:gO79QgxJ4u#PxqOBH3_PP=N=&9BtEPkJ"
 signing_key_path: "/data/localhost.signing.key"
 trusted_key_servers:
   - server_name: "matrix.org"
+
+## Recaptcha and registration config
+recaptcha_public_key: "your_site_key"
+recaptcha_private_key: "your_secret_key"
+
+## Enable registration
+enable_registration: true
+enable_registration_captcha: true
+
+## Disable federation if you want
+# federation_domain_whitelist: []
+
+# vim:ft=yaml
