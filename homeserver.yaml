@@ -1,0 +1,113 @@
+# =============================================
+# Configuration file for Synapse.
+# =============================================
+
+server_name: "localhost"
+public_baseurl: "http://localhost:8008/"
+
+pid_file: /data/homeserver.pid
+report_stats: false
+
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+        compress: false
+
+database:
+  name: psycopg2
+  allow_unsafe_locale: true
+  args:
+    user: synapse
+    password: synapsepass
+    database: synapse
+    host: postgres
+    cp_min: 5
+    cp_max: 10
+    port: 5432
+
+log_config: "/data/localhost.log.config"
+media_store_path: /data/media_store
+
+templates:
+  custom_template_directory: /data/custom_templates
+
+# ==================== SECRETS ====================
+registration_shared_secret: "registration_shared_secret"
+macaroon_secret_key: "macaroon_secret_key"
+form_secret: "form_secret"
+signing_key_path: "/data/localhost.signing.key"
+
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# ==================== REGISTRATION ====================
+enable_registration: true
+
+enable_set_displayname: true
+enable_set_avatar_url: true
+enable_3pid_changes: true
+
+# Register with either email or phone number
+# when email is used disable_msisdn_registration need to be set true
+# when msisdn is used disable_msisdn_registration need to be set false
+registrations_require_3pid:
+  - email
+  # - msisdn
+
+disable_msisdn_registration: true
+
+# Delegate msisdn verification to msisdn-identity services
+account_threepid_delegates:
+  # For phone number verification
+  msisdn: http://msisdn-identity:8091
+
+# !important#
+# change request_token_inhibit_3pid_errors to true to prevent 3PID enumeration
+
+request_token_inhibit_3pid_errors: false
+
+# change these values for production, else attacker will exploit it
+rc_3pid_validation:
+  per_second: 1000
+  burst_count: 1000
+
+rc_registration:
+  per_second: 1000
+  burst_count: 1000
+
+# !important
+
+# ==================== EMAIL CONFIGURATION ====================
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  smtp_user: "smtp_user@gmail.com"
+  smtp_pass: "smtp_pass"
+  require_transport_security: true
+  notif_from: "Teak Chat Server <teakchat01@gmail.com>"
+  subjects:
+    email_validation: "Teak Chat - Please verify your email address"
+
+# ==================== CAPTCHA ====================
+enable_registration_captcha: false
+recaptcha_public_key: "recaptcha_public_key"
+recaptcha_private_key: "recaptcha_private_key"
+
+# ==================== OIDC ====================
+# oidc_providers:
+#   - idp_id: google
+#     idp_name: "Google"
+#     issuer: "https://accounts.google.com/"
+#     client_id: ""
+#     client_secret: ""
+#     scopes: ["openid", "profile", "email"]
+#     user_mapping_provider:
+#       config:
+#         subject_claim: "sub"
+#         localpart_template: "{{ user.given_name|lower|replace(' ', '_') }}"
+#         display_name_template: "{{ user.name }}"
+#         email_template: "{{ user.email }}"

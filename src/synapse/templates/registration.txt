@@ -1,0 +1,11 @@
+Hello,
+
+You requested to register a new Teak Chat account with this email.
+If this was you, please click the button below to confirm your email address.
+
+{{ link }}
+
+If this was not you, you can safely disregard this email.
+
+Thank you,
+The Teak Chat Team

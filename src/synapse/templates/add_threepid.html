@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+{% block title %}Addition of an email address to your Teak Chat account{% endblock %}
+
+{% block body %}
+<div class="email-content" style="padding: 10px 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #4A4A4A; line-height: 1.6; text-align: center;">
+    
+    <h2 style="color: #2D5A27; font-size: 22px; margin-top: 0; font-weight: 600;">Nice to see you again! 🍃</h2>
+    
+    <p style="font-size: 15px; margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto;">
+        A request to add an email address to your Teak Chat account has been received.<br>
+        If this was you, please click the button below to confirm adding this email.
+    </p>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="{{ link }}" style="
+            background-color: #2D5A27; 
+            border: 1px solid #E5A93C;
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 14px 35px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            border-radius: 25px; 
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(229, 169, 60, 0.3);
+        ">
+            Add This Email Address
+        </a>
+    </div>
+
+    <div style="border-top: 2px dashed #E5D1B3; margin-top: 40px; padding-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <p style="font-size: 13px; color: #8C8C8C; margin: 0 0 15px 0;">
+            If this was not you, you can safely disregard this email.
+        </p>
+    </div>
+    
+    <p style="font-size: 14px; font-weight: 600; color: #2D5A27; margin-bottom: 0;">
+        Thank you,<br>
+        <span style="color: #D49B28;">The Teak Chat Team</span>
+    </p>
+</div>
+{% endblock %}

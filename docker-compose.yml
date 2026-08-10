@@ -1,6 +1,19 @@
 name: matrix
 
 services:
+  msisdn-identity:
+    build: ./msisdn-service
+    container_name: msisdn-identity
+    restart: unless-stopped
+    env_file:
+      - ./msisdn-service/.env
+    volumes:
+      - ./msisdn-service:/app
+    environment:
+      - WATCHFILES_FORCE_POLLING=true
+    expose:
+      - "8091"
+
   synapse:
     image: matrixdotorg/synapse:v1.141.0
     container_name: synapse
@@ -10,8 +23,11 @@ services:
       - "8008:8008"
     volumes:
       - synapse_data:/data
+      - ./homeserver.yaml:/data/homeserver.yaml
+      - ./src/synapse/templates:/data/custom_templates
     depends_on:
       - postgres
+      - msisdn-identity
 
   postgres:
     image: postgres:15
@@ -35,6 +51,7 @@ services:
       - "3030:5173"
     volumes:
       - ./src:/app/src
+      - ./index.html:/app/index.html
       - node_modules:/app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
@@ -44,5 +61,7 @@ services:
 
 volumes:
   synapse_data:
+    external: true
+    name: matrix_synapse_data
   postgres_data:
   node_modules:
